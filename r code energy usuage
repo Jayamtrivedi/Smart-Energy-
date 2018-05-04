@@ -1,0 +1,23 @@
+#Rcode for finiding zones
+long_DF <- powersub %>% gather(voltage, Revenue, Sub_metering_1:Sub_metering_3)
+
+
+newdata <- powersub %>%
+  mutate(month = format(Date, "%m"), year = format(Date, "%Y")) %>%
+  group_by(month, year) %>%
+  summarise(zone1 = max(Sub_metering_1), zone2 = max(Sub_metering_2),zone3 = max(Sub_metering_3))
+
+
+powersub$day <- weekdays(as.Date(powersub$Date))
+
+powersub <- subset(housepower, format.Date(Date,"%y")>="06" & format.Date(Date,"%y")>="07")
+newdata1 <- subset(powersub, day =="Friday" ,select = c(Global_reactive_power, day ,Sub_metering_1,Sub_metering_2,Sub_metering_3,DateTime))
+
+qplot(Global_reactive_power,Sub_metering_1, Sub_metering_2, Sub_metering_3 ,data=newdata1, g)
+
+
+
+summary(housepower)
+
+newdata2 <- subset(housepower, DateTime == "2008-12-13" & DataTime)
+
