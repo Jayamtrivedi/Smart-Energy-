@@ -1,0 +1,14 @@
+# set format to date field
+
++housepower$Date <- as.Date(housepower$Date,format = "%d/%m/%Y")
+
+# subsetting
++summary(housepower)
+
+
++powersub <- subset(housepower, format.Date(Date,"%y")>="06" & format.Date(Date,"%y")>="07")
+#copying date & time together
+
++Date_Time <- paste(powersub$Date, powersub$Time)
++powersub$DateTime <- as.POSIXct(Date_Time)
++housepower <- powersub[, c(10, 3:9)]
